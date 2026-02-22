@@ -92,3 +92,101 @@ SELECT *
  SELECT COUNT(*) FROM dbo.[Calling Enquiry FMS]
 
  SELECT COUNT(*) FROM [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS];
+
+
+
+*****************************************************************************************************
+SELECT TOP (1000) [updated_at]
+      ,[created_at]
+      ,[Lead_id]
+      ,[Name_of_Client]
+      ,[Mobile]
+      ,[Email_Id]
+      ,[Subjects]
+      ,[Notes]
+      ,[IVR_Url]
+      ,[WebSite_Name]
+      ,[Data_Source]
+      ,[Assign_To_MR]
+      ,[Remarks_History]
+      ,[Planned]
+      ,[Actual]
+      ,[Time_Delay]
+      ,[Status]
+      ,[Sample_New_Order_Form_Link]
+      ,[Followup]
+      ,[Remarks]
+      ,[Followup_Date]
+      ,[Transfer_To]
+      ,[Default_Contact_No]
+      ,[Default_Email_ID]
+      ,[Email_Sent]
+      ,[WhatsApp_Sent]
+      ,[SMS_Sent]
+      ,[Count_ID]
+      ,[Email_Sent_Status]
+      ,[WhatsApp_Sent_Status]
+      ,[SMS_Sent_Status]
+      ,[Order_Sales_Saved_Staus]
+      ,[From_Sheet]
+      ,[SQV_Lead_Intent]
+      ,[Lead_Priority]
+      ,[Duplicate]
+      ,[Client_Category]
+      ,[Google_Drive_Call_Recording_URL]
+      ,[Row_Duplicate_Mark]
+      ,[Call_Time]
+      ,[File_Size]
+      ,[Exceptions_if_call_recording_not_found]
+      ,[NBD_CRR_Call]
+      ,[call_type]
+  FROM [LeadManagement1].[dbo].[Harpal Singh - Calling Enquiry FMS]
+
+
+
+  
+SELECT COUNT(*) 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Zaki Ahmed - Calling Enquiry FMS';
+
+SELECT COUNT(*) 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'PUSHPANSHU - Calling Enquiry FMS (1)';
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'PUSHPANSHU - Calling Enquiry FMS (1)';
+
+EXCEPT
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'PUSHPANSHU - Calling Enquiry FMS (1)';
+
+BEGIN TRANSACTION;
+
+SELECT COUNT(*) FROM [LeadManagement1].[dbo].[PUSHPANSHU - Calling Enquiry FMS (1)];;
+
+ SELECT COUNT(*) FROM [LeadManagement1].[dbo].[Anupam Singh Molpha - Calling Enquiry FMS];
+  SELECT COUNT(*) FROM [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS]
+
+  use LeadManagement1;
+  go
+
+INSERT INTO [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS]
+SELECT *
+FROM [LeadManagement1].[dbo].[PUSHPANSHU - Calling Enquiry FMS (1)];
+
+-- Check karo
+SELECT COUNT(*) FROM dbo.Calling_sales_fms;
+
+-- Agar galat ho:
+-- ROLLBACK;
+
+-- Agar sahi ho:
+COMMIT;
+
+
+  ALTER TABLE [LeadManagement1].[dbo].[Rohit Ahuja - Calling Enquiry FMS]
+ADD call_type VARCHAR(max) null;
+
