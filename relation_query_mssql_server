@@ -1,0 +1,241 @@
+USE [LeadManagement1]
+GO
+
+/****** Object:  Table [dbo].[Calling Enquiry FMS]    Script Date: 2/22/2026 2:38:09 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Calling Enquiry FMS](
+	[updated_date] [varchar](max) NULL,
+	[created_date] [varchar](max) NULL,
+	[Lead_id] [varchar](max) NULL,
+	[Name_of_Client] [varchar](max) NULL,
+	[Mobile] [varchar](max) NULL,
+	[Email_Id] [varchar](max) NULL,
+	[Subjects] [varchar](max) NULL,
+	[Notes] [varchar](max) NULL,
+	[IVR_Url] [varchar](max) NULL,
+	[WebSite_Name] [varchar](max) NULL,
+	[Data_Source] [varchar](max) NULL,
+	[Assign_To_MR] [varchar](max) NULL,
+	[Remarks_History] [varchar](max) NULL,
+	[Planned] [varchar](max) NULL,
+	[Actual] [varchar](max) NULL,
+	[Time_Delay] [varchar](max) NULL,
+	[Status] [varchar](max) NULL,
+	[Sample_New_Order_Form_Link] [varchar](max) NULL,
+	[Followup] [varchar](max) NULL,
+	[Remarks] [varchar](max) NULL,
+	[Followup_Date] [varchar](max) NULL,
+	[Transfer_To] [varchar](max) NULL,
+	[Default_Contact_No] [varchar](max) NULL,
+	[Default_Email_ID] [varchar](max) NULL,
+	[Email_Sent] [varchar](max) NULL,
+	[WhatsApp_Sent] [varchar](max) NULL,
+	[SMS_Sent] [varchar](max) NULL,
+	[Count_ID] [varchar](max) NULL,
+	[Email_Sent_Status] [varchar](max) NULL,
+	[WhatsApp_Sent_Status] [varchar](max) NULL,
+	[SMS_Sent_Status] [varchar](max) NULL,
+	[Order_Sales_Saved_Staus] [varchar](max) NULL,
+	[From_Sheet] [varchar](max) NULL,
+	[SQV_Lead_Intent] [varchar](max) NULL,
+	[Lead_Priority] [varchar](max) NULL,
+	[Duplicate] [varchar](max) NULL,
+	[Client_Category] [varchar](max) NULL,
+	[Google_Drive_Call_Recording_URL] [varchar](max) NULL,
+	[Row_Duplicate_Mark] [varchar](max) NULL,
+	[Call_Time] [varchar](max) NULL,
+	[File_Size] [varchar](max) NULL,
+	[Exceptions_if_call_recording_not_found] [varchar](max) NULL,
+	[NBD_CRR_Call] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+
+ALTER TABLE [dbo].[Calling Enquiry FMS]
+ADD BufferSheetId INT;
+
+
+ALTER TABLE [dbo].[Calling Enquiry FMS]
+ADD CONSTRAINT FK_CallingEnquiry_BufferSheet
+FOREIGN KEY (BufferSheetId)
+REFERENCES [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data](Id);
+
+
+*****************************************************************************************
+USE [LeadManagement1]
+GO
+
+/****** Object:  Table [dbo].[DialShree-Kairali-Received API]    Script Date: 2/22/2026 2:29:00 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[DialShree-Kairali-Received API](
+	[updated_date] [varchar](max) NULL,
+	[created_date] [varchar](max) NULL,
+	[lead_id] [varchar](max) NULL,
+	[Name_of_Client] [varchar](max) NULL,
+	[mobile_number] [varchar](max) NULL,
+	[Email_Id] [varchar](max) NULL,
+	[Subjects] [varchar](max) NULL,
+	[Notes] [varchar](max) NULL,
+	[URL] [varchar](max) NULL,
+	[WebSite_Name] [varchar](max) NULL,
+	[Data_Source] [varchar](max) NULL,
+	[Assign_To_MR_Main_Agent_Name] [varchar](max) NULL,
+	[Remarks_History] [varchar](max) NULL,
+	[SQV_Lead_Intent] [varchar](max) NULL,
+	[Campaign_NAME] [varchar](max) NULL,
+	[call_Count] [varchar](max) NULL,
+	[agent_Id] [varchar](max) NULL,
+	[latest_called_at] [varchar](max) NULL,
+	[customer_Name] [varchar](max) NULL,
+	[Alt_Phone] [varchar](max) NULL,
+	[Address] [varchar](max) NULL,
+	[City] [varchar](max) NULL,
+	[State] [varchar](max) NULL,
+	[Postal_Code] [varchar](max) NULL,
+	[Province] [varchar](max) NULL,
+	[date_Of_Birth] [varchar](max) NULL,
+	[latest_recording_url] [varchar](max) NULL,
+	[Disposition] [varchar](max) NULL,
+	[Lead_Id_From_Dialer] [varchar](max) NULL,
+	[list_id] [varchar](max) NULL,
+	[Lead_Priority] [varchar](max) NULL,
+	[Campaign_Id] [varchar](max) NULL,
+	[Lead_Category] [varchar](max) NULL,
+	[Lead_Conversion] [varchar](max) NULL,
+	[Conversion_Amount] [varchar](max) NULL,
+	[Comment] [varchar](max) NULL,
+	[Call_Notes] [varchar](max) NULL,
+	[HangUp_Reason] [varchar](max) NULL,
+	[Disposition2] [varchar](max) NULL,
+	[Doer] [varchar](max) NULL,
+	[Send_To_Remarks_Sheet_TimeStamp] [varchar](max) NULL,
+	[send_lead_Date_Time] [varchar](max) NULL,
+	[SentTo_Next_Step_TimeStamp] [varchar](max) NULL,
+	[sent_status_call_ReAudit] [varchar](max) NULL,
+	[Call_Type] [varchar](max) NULL,
+	[Call_Recording_Duration] [varchar](max) NULL,
+	[Drop_Leads_Recycle_Status] [varchar](max) NULL,
+	[column48] [varchar](max) NULL,
+	[column49] [varchar](max) NULL,
+	[column50] [varchar](max) NULL,
+	[column51] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+ALTER TABLE [dbo].[DialShree-Kairali-Received API]
+ADD BufferSheetId INT;
+
+ALTER TABLE [dbo].[DialShree-Kairali-Received API]
+ADD CONSTRAINT FK_DialShree_BufferSheet
+FOREIGN KEY (BufferSheetId)
+REFERENCES [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data](Id);
+*********************************************************************************
+
+USE [LeadManagement1]
+GO
+
+/****** Object:  Table [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]    Script Date: 2/22/2026 1:23:54 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data](
+	[updated_date] [varchar](max) NULL,
+	[created_date] [varchar](max) NULL,
+	[Lead_id] [varchar](max) NULL,
+	[Name_of_Client] [varchar](max) NULL,
+	[Mobile] [varchar](max) NULL,
+	[Email_Id] [varchar](max) NULL,
+	[Subjects] [varchar](max) NULL,
+	[Notes] [varchar](max) NULL,
+	[IVR_URL] [varchar](max) NULL,
+	[WebSite_Name] [varchar](max) NULL,
+	[Data_Source] [varchar](max) NULL,
+	[Assign_To_MR_Main] [varchar](max) NULL,
+	[Timestamp_2] [varchar](max) NULL,
+	[column14] [varchar](max) NULL,
+	[Year] [varchar](max) NULL,
+	[Month] [varchar](max) NULL,
+	[Week] [varchar](max) NULL,
+	[Intent] [varchar](max) NULL,
+	[Duplicate] [varchar](max) NULL,
+	[Sheet_Name] [varchar](max) NULL,
+	[UTM_Campaign_Name] [varchar](max) NULL,
+	[UTM_Adgroup_Name] [varchar](max) NULL,
+	[Enquiry_Status_Last] [varchar](max) NULL,
+	[Converted_Amount] [varchar](max) NULL,
+	[Converted_Date] [varchar](max) NULL,
+	[Order_Taken_By] [varchar](max) NULL,
+	[status] [varchar](max) NULL,
+	[NBD_CRR] [varchar](max) NULL,
+	[KAPPL_KTAHV] [varchar](max) NULL,
+	[Transcription] [varchar](max) NULL,
+	[Lead_Relates_to_which_company] [varchar](max) NULL,
+	[Name_of_User] [varchar](max) NULL,
+	[Phone_Number_of_User] [varchar](max) NULL,
+	[Email_of_User] [varchar](max) NULL,
+	[Country] [varchar](max) NULL,
+	[Priority] [varchar](max) NULL,
+	[Urgency_YES_NO] [varchar](max) NULL,
+	[Contact_Time] [varchar](max) NULL,
+	[Summary_of_Conversation] [varchar](max) NULL,
+	[Lead_Outcome] [varchar](max) NULL,
+	[Lead_Category] [varchar](max) NULL,
+	[Preferred_Way_to_Contact] [varchar](max) NULL,
+	[gpt_Extraction_Status] [varchar](max) NULL,
+	[Sent_status] [varchar](max) NULL,
+	[Test_Col] [varchar](max) NULL,
+	[Mail_Status] [varchar](max) NULL,
+	[Reason_why_assign_Or_Delete] [varchar](max) NULL,
+	[Verified_Source] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+SELECT Lead_id, COUNT(*)
+FROM [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]
+GROUP BY Lead_id
+HAVING COUNT(*) > 1;
+
+
+SELECT *
+FROM [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]
+WHERE Lead_id IN (
+    SELECT Lead_id
+    FROM [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]
+    GROUP BY Lead_id
+    HAVING COUNT(*) > 1
+)
+ORDER BY Lead_id;
+
+
+
+WITH CTE AS (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY Lead_id ORDER BY created_date) AS rn
+    FROM [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]
+)
+DELETE FROM CTE
+WHERE rn > 1;
+
+
+
+ALTER TABLE [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]
+ADD Id INT IDENTITY(1,1);
+
+ALTER TABLE [dbo].[NEW_Buffer-Sheet_Enquiry_Handover Data]
+ADD CONSTRAINT PK_BufferSheet_Id PRIMARY KEY (Id);
