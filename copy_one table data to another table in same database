@@ -1,0 +1,94 @@
+SELECT TOP (1000) [updated_at]
+      ,[created_at]
+      ,[Lead_id]
+      ,[Name_of_Client]
+      ,[Mobile]
+      ,[Email_Id]
+      ,[Subjects]
+      ,[Notes]
+      ,[IVR_Url]
+      ,[WebSite_Name]
+      ,[Data_Source]
+      ,[Assign_To_MR]
+      ,[Remarks_History]
+      ,[Planned]
+      ,[Actual]
+      ,[Time_Delay]
+      ,[Status]
+      ,[Sample_New_Order_Form_Link]
+      ,[Followup]
+      ,[Remarks]
+      ,[Followup_Date]
+      ,[Transfer_To]
+      ,[Default_Contact_No]
+      ,[Default_Email_ID]
+      ,[Email_Sent]
+      ,[WhatsApp_Sent]
+      ,[SMS_Sent]
+      ,[Count_ID]
+      ,[Email_Sent_Status]
+      ,[WhatsApp_Sent_Status]
+      ,[SMS_Sent_Status]
+      ,[Order_Sales_Saved_Staus]
+      ,[From_Sheet]
+      ,[column34]
+      ,[SQV_Lead_Intent]
+      ,[Lead_Priority]
+      ,[Duplicate]
+      ,[Client_Category]
+      ,[Google_Drive_Call_Recording_URL]
+      ,[Row_Duplicate_Mark]
+      ,[Call_Time]
+      ,[File_Size]
+      ,[Exceptions_if_call_recording_not_found]
+      ,[NBD_CRR_Call]
+  FROM [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS]
+
+  ALTER TABLE [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS]
+ADD [call_type] VARCHAR(max) null;
+
+
+use LeadManagement1;
+go
+
+
+SELECT DB_NAME();
+
+
+SELECT name 
+FROM sys.tables
+ORDER BY name;
+
+
+SELECT COUNT(*) 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Calling Enquiry FMS';
+
+SELECT COUNT(*) 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Bhuvaneshwari - Calling Enquiry FMS';
+
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Calling Enquiry FMS'
+
+EXCEPT
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Bhuvaneshwari - Calling Enquiry FMS';
+
+
+ALTER TABLE [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS]
+DROP COLUMN column34;
+
+
+
+INSERT INTO dbo.[Calling Enquiry FMS]
+SELECT *
+ FROM [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS]
+
+ SELECT COUNT(*) FROM dbo.[Calling Enquiry FMS]
+
+ SELECT COUNT(*) FROM [LeadManagement1].[dbo].[Bhuvaneshwari - Calling Enquiry FMS];
