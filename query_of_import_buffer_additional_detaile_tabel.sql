@@ -1,38 +1,318 @@
-use userdb
+USE [LeadManagement1]
+GO
+
+/****** Object:  Table [dbo].[NEW Buffer Sheet - Enquiry Handover Data]    Script Date: 23-02-2026 10:26:05 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NEW Buffer Sheet - Enquiry Handover Data](
+	[updated_at] [varchar](max) NULL,
+	[created_at] [varchar](max) NULL,
+	[Lead_id] [varchar](max) NULL,
+	[Name_of_Client] [varchar](max) NULL,
+	[Mobile] [varchar](max) NULL,
+	[Email_Id] [varchar](max) NULL,
+	[Subjects] [varchar](max) NULL,
+	[Notes] [varchar](max) NULL,
+	[IVR_URL] [varchar](max) NULL,
+	[WebSite_Name] [varchar](max) NULL,
+	[Data_Source] [varchar](max) NULL,
+	[Assign_To_MR_Main] [varchar](max) NULL,
+	[Timestamp_2] [varchar](max) NULL,
+	[column14] [varchar](max) NULL,
+	[Year] [varchar](max) NULL,
+	[Month] [varchar](max) NULL,
+	[Week] [varchar](max) NULL,
+	[Intent] [varchar](max) NULL,
+	[Duplicate] [varchar](max) NULL,
+	[Sheet_Name] [varchar](max) NULL,
+	[UTM_Campaign_Name] [varchar](max) NULL,
+	[UTM_Adgroup_Name] [varchar](max) NULL,
+	[Enquiry_Status_Last] [varchar](max) NULL,
+	[Converted_Amount] [varchar](max) NULL,
+	[Converted_Date] [varchar](max) NULL,
+	[Order_Taken_By] [varchar](max) NULL,
+	[status] [varchar](max) NULL,
+	[NBD_CRR] [varchar](max) NULL,
+	[KAPPL_KTAHV] [varchar](max) NULL,
+	[Transcription] [varchar](max) NULL,
+	[Lead_Relates_to_which_company] [nvarchar](50) NULL,
+	[Name_of_User] [varchar](max) NULL,
+	[Phone_Number_of_User] [varchar](max) NULL,
+	[Email_of_User] [varchar](max) NULL,
+	[Country] [varchar](max) NULL,
+	[Priority] [varchar](max) NULL,
+	[Urgency_YES_NO] [varchar](max) NULL,
+	[Contact_Time] [varchar](max) NULL,
+	[Summary_of_Conversation] [varchar](max) NULL,
+	[Lead_Outcome] [varchar](max) NULL,
+	[Lead_Category] [varchar](max) NULL,
+	[Preferred_Way_to_Contact] [varchar](max) NULL,
+	[gpt_Extraction_Status] [varchar](max) NULL,
+	[Sent_status] [varchar](max) NULL,
+	[Test_Col] [varchar](max) NULL,
+	[Mail_Status] [varchar](max) NULL,
+	[Reason_why_assign_Or_Delete] [varchar](max) NULL,
+	[Verified_Source] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SELECT Lead_id, COUNT(*)
+FROM [dbo].[new_buffer_master_all]
+GROUP BY Lead_id
+HAVING COUNT(*) > 1;
 
 
-CREATE TABLE lead_buffer_additional_detail (
-    lead_id VARCHAR(Max),
-    assign_to_mr_main VARCHAR(MAX),
-    timestamp_2 VARCHAR(MAX),
-    enquiry_status_last VARCHAR(MAX),
-    converted_amount VARCHAR(MAX),
-    converted_date VARCHAR(MAX),
-    order_taken_by VARCHAR(MAX),
-    status VARCHAR(MAX),
-    nbd_crr VARCHAR(MAX),
-    kappl_ktahv VARCHAR(MAX),
-    transcription VARCHAR(MAX),
-    user_name VARCHAR(MAX),
-    user_phone_number VARCHAR(MAX),
-    user_email VARCHAR(MAX),
-    contact_time VARCHAR(MAX),
-    conversation_summary VARCHAR(MAX),
-    lead_outcome VARCHAR(MAX),
-    sent_status VARCHAR(MAX),
-    mail_status VARCHAR(MAX),
-    assign_delete_reason VARCHAR(MAX)
+WITH CTE AS (
+    SELECT *,
+           ROW_NUMBER() OVER (
+               PARTITION BY Lead_id 
+               ORDER BY ID DESC
+           ) AS RN
+    FROM [dbo].[new_buffer_master_all]
+)
+DELETE FROM CTE
+WHERE RN > 1;
 
+
+
+UPDATE [dbo].[new_buffer_master_all]
+SET Lead_id = ''
+WHERE Lead_id IS NULL;
+
+ALTER TABLE dbo.new_buffer_master_all
+ADD CONSTRAINT UQ_new_buffer_master_all_Lead_id UNIQUE (Lead_id);
+
+CREATE TABLE [dbo].[new_buffer_master_all] (
+    [updated_at]        VARCHAR(MAX) NULL,
+    [created_at]        VARCHAR(MAX) NULL,
+    [Lead_id]           VARCHAR(MAX) NULL,
+    [Name_of_Client]    VARCHAR(MAX) NULL,
+    [Mobile]            VARCHAR(MAX) NULL,
+    [Email_Id]          VARCHAR(MAX) NULL,
+    [Subjects]          VARCHAR(MAX) NULL,
+    [Notes]             VARCHAR(MAX) NULL,
+    [IVR_URL]           VARCHAR(MAX) NULL,
+    [WebSite_Name]      VARCHAR(MAX) NULL,
+    [Data_Source]       VARCHAR(MAX) NULL,
+    [Verified_Source]   VARCHAR(MAX) NULL
 );
 
 
-BULK INSERT dbo.lead_buffer_additional_detail
-FROM 'C:\Import\Buffer_sheet_copy_detail_table.csv'
-WITH (
-    FIELDTERMINATOR = ',',
-    ROWTERMINATOR = '\n',
-    FIRSTROW = 2,
-    MAXERRORS = 100000,  -- Errors ignore karo
-    TABLOCK
+SELECT COUNT(*)
+FROM dbo.new_buffer_master_all
+WHERE Lead_id IS NULL;
+
+
+DELETE FROM dbo.new_buffer_master_all
+WHERE Lead_id IS NULL;
+
+SELECT Lead_id, COUNT(*)
+FROM dbo.new_buffer_master_all
+GROUP BY Lead_id
+HAVING COUNT(*) > 1;
+
+SELECT MAX(LEN(Lead_id)) FROM dbo.new_buffer_master_all;
+
+ALTER TABLE dbo.new_buffer_master_all
+ALTER COLUMN Lead_id VARCHAR(500) NOT NULL;
+
+ALTER TABLE dbo.new_buffer_master_all
+ADD CONSTRAINT UQ_new_buffer_master_all_Lead_id
+UNIQUE (Lead_id);
+
+ALTER TABLE [dbo].[new_buffer_master_all]
+ADD Id INT IDENTITY(1,1);
+
+INSERT INTO dbo.new_buffer_master_all
+(
+    updated_at,
+    created_at,
+    Lead_id,
+    Name_of_Client,
+    Mobile,
+    Email_Id,
+    Subjects,
+    Notes,
+    IVR_URL,
+    WebSite_Name,
+    Data_Source,
+    Verified_Source
+)
+SELECT
+    updated_at,
+    created_at,
+    Lead_id,
+    Name_of_Client,
+    Mobile,
+    Email_Id,
+    Subjects,
+    Notes,
+    IVR_URL,
+    WebSite_Name,
+    Data_Source,
+    Verified_Source
+FROM dbo.[NEW Buffer Sheet - Enquiry Handover Data];
+
+CREATE TABLE new_buffer_detail (
+    -- First 19 columns
+    [Lead_id] [varchar](max) NULL,
+    Assign_To_MR_Main VARCHAR(MAX) NULL,
+    Timestamp_2 VARCHAR(MAX) NULL,
+    Year VARCHAR(MAX) NULL,
+    Month VARCHAR(MAX) NULL,
+    Week VARCHAR(MAX) NULL,
+    Intent VARCHAR(MAX) NULL,
+    Duplicate VARCHAR(MAX) NULL,
+    Sheet_Name VARCHAR(MAX) NULL,
+    UTM_Campaign_Name VARCHAR(MAX) NULL,
+    UTM_Adgroup_Name VARCHAR(MAX) NULL,
+    Enquiry_Status_Last VARCHAR(MAX) NULL,
+    Converted_Amount VARCHAR(MAX) NULL,
+    Converted_Date VARCHAR(MAX) NULL,
+    Order_Taken_By VARCHAR(MAX) NULL,
+    status VARCHAR(MAX) NULL,
+    NBD_CRR VARCHAR(MAX) NULL,
+    KAPPL_KTAHV VARCHAR(MAX) NULL,
+    Transcription VARCHAR(MAX) NULL,
+  );
+
+
+  ALTER TABLE dbo.new_buffer_detail
+ALTER COLUMN Lead_id VARCHAR(500) NOT NULL;
+
+
+  ALTER TABLE dbo.new_buffer_detail
+ADD CONSTRAINT FK_child_table_Lead_id
+FOREIGN KEY (Lead_id)
+REFERENCES dbo.new_buffer_master_all(Lead_id);
+
+
+  ALTER TABLE [dbo].[new_buffer_detail]
+ADD Id INT IDENTITY(1,1);
+
+  INSERT INTO new_buffer_detail (
+    Lead_id,
+    Assign_To_MR_Main,
+    Timestamp_2,
+    Year,
+    Month,
+    Week,
+    Intent,
+    Duplicate,
+    Sheet_Name,
+    UTM_Campaign_Name,
+    UTM_Adgroup_Name,
+    Enquiry_Status_Last,
+    Converted_Amount,
+    Converted_Date,
+    Order_Taken_By,
+    status,
+    NBD_CRR,
+    KAPPL_KTAHV,
+    Transcription
+)
+SELECT
+    Lead_id,
+    Assign_To_MR_Main,
+    Timestamp_2,
+    Year,
+    Month,
+    Week,
+    Intent,
+    Duplicate,
+    Sheet_Name,
+    UTM_Campaign_Name,
+    UTM_Adgroup_Name,
+    Enquiry_Status_Last,
+    Converted_Amount,
+    Converted_Date,
+    Order_Taken_By,
+    status,
+    NBD_CRR,
+    KAPPL_KTAHV,
+    Transcription
+FROM [dbo].[NEW Buffer Sheet - Enquiry Handover Data];
+
+
+CREATE TABLE new_buffer_additional_detail (
+    -- Next 18 columns
+    [Lead_id] [varchar](max) NULL,
+     Lead_Relates_to_which_company NVARCHAR(50) NULL,
+      Name_of_User VARCHAR(MAX) NULL,
+    Phone_Number_of_User VARCHAR(MAX) NULL,
+    Email_of_User VARCHAR(MAX) NULL,
+    Country VARCHAR(MAX) NULL,
+    Priority VARCHAR(MAX) NULL,
+    Urgency_YES_NO VARCHAR(MAX) NULL,
+    Contact_Time VARCHAR(MAX) NULL,
+    Summary_of_Conversation VARCHAR(MAX) NULL,
+    Lead_Outcome VARCHAR(MAX) NULL,
+    Lead_Category VARCHAR(MAX) NULL,
+    Preferred_Way_to_Contact VARCHAR(MAX) NULL,
+    gpt_Extraction_Status VARCHAR(MAX) NULL,
+    Sent_status VARCHAR(MAX) NULL,
+    Test_Col VARCHAR(MAX) NULL,
+    Mail_Status VARCHAR(MAX) NULL,
+    Reason_why_assign_Or_Delete VARCHAR(MAX) NULL,
+   
 );
 
+
+  ALTER TABLE dbo.new_buffer_additional_detail
+ALTER COLUMN Lead_id VARCHAR(500) NOT NULL;
+
+
+  ALTER TABLE dbo.new_buffer_additional_detail
+ADD CONSTRAINT FK_new_buffer_detail_d_Lead_id1
+FOREIGN KEY (Lead_id)
+REFERENCES dbo.new_buffer_master_all(Lead_id);
+
+
+
+  ALTER TABLE [dbo].[new_buffer_additional_detail]
+ADD Id INT IDENTITY(1,1);
+
+INSERT INTO dbo.new_buffer_additional_detail (
+    Lead_id,
+    Lead_Relates_to_which_company,
+    Name_of_User,
+    Phone_Number_of_User,
+    Email_of_User,
+    Country,
+    Priority,
+    Urgency_YES_NO,
+    Contact_Time,
+    Summary_of_Conversation,
+    Lead_Outcome,
+    Lead_Category,
+    Preferred_Way_to_Contact,
+    gpt_Extraction_Status,
+    Sent_status,
+    Test_Col,
+    Mail_Status,
+    Reason_why_assign_Or_Delete
+)
+SELECT
+    Lead_id,
+    Lead_Relates_to_which_company,
+    Name_of_User,
+    Phone_Number_of_User,
+    Email_of_User,
+    Country,
+    Priority,
+    Urgency_YES_NO,
+    Contact_Time,
+    Summary_of_Conversation,
+    Lead_Outcome,
+    Lead_Category,
+    Preferred_Way_to_Contact,
+    gpt_Extraction_Status,
+    Sent_status,
+    Test_Col,
+    Mail_Status,
+    Reason_why_assign_Or_Delete
+FROM [dbo].[NEW Buffer Sheet - Enquiry Handover Data];
