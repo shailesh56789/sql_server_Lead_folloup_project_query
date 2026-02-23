@@ -89,6 +89,10 @@ CREATE TABLE dbo.DialShree_Kairali_Received_detail (
 
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
 
+
+ALTER TABLE [dbo].[DialShree_Kairali_Received_detail]
+ADD Id INT IDENTITY(1,1);
+
 INSERT INTO dbo.DialShree_Kairali_Received_detail (
     Lead_id,
     Assign_To_MR_Main_Agent_Name,
@@ -157,6 +161,25 @@ CREATE TABLE dbo.DialShree_Kairali_Received_additional_detail (
     [Drop_Leads_Recycle_Status] VARCHAR(MAX) NULL
 
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'DialShree_Kairali_Received_additional_detail';
+
+
+  ALTER TABLE dbo.DialShree_Kairali_Received_additional_detail
+ALTER COLUMN Lead_id VARCHAR(500) NOT NULL;
+
+
+  ALTER TABLE dbo.DialShree_Kairali_Received_additional_detail
+ADD CONSTRAINT FK_new_addition_detail_Lead_idq1
+FOREIGN KEY (Lead_id)
+REFERENCES dbo.new_buffer_master_all(Lead_id);
+
+
+ALTER TABLE [dbo].[DialShree_Kairali_Received_additional_detail]
+ADD Id INT IDENTITY(1,1);
 
 
 INSERT INTO dbo.DialShree_Kairali_Received_additional_detail (
