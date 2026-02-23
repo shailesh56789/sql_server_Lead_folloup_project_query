@@ -1,0 +1,205 @@
+USE [LeadManagement1]
+GO
+
+/****** Object:  Table [dbo].[DialShree-Kairali-Received API]    Script Date: 23-02-2026 10:48:02 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[DialShree-Kairali-Received API](
+	[updated_at] [varchar](max) NULL,
+	[created_at] [varchar](max) NULL,
+	[Lead_id] [varchar](max) NULL,
+	[Name_of_Client] [varchar](max) NULL,
+	[Mobile] [varchar](max) NULL,
+	[Email_Id] [varchar](max) NULL,
+	[Subjects] [varchar](max) NULL,
+	[Notes] [varchar](max) NULL,
+	[URL] [varchar](max) NULL,
+	[WebSite_Name] [varchar](max) NULL,
+	[Data_Source] [varchar](max) NULL,
+	[Assign_To_MR_Main_Agent_Name] [varchar](max) NULL,
+	[Remarks_History] [varchar](max) NULL,
+	[SQV_Lead_Intent] [varchar](max) NULL,
+	[Campaign_NAME] [varchar](max) NULL,
+	[call_Count] [varchar](max) NULL,
+	[agent_Id] [varchar](max) NULL,
+	[latest_called_at] [varchar](max) NULL,
+	[customer_Name] [varchar](max) NULL,
+	[Alt_Phone] [varchar](max) NULL,
+	[Address] [varchar](max) NULL,
+	[City] [varchar](max) NULL,
+	[State] [varchar](max) NULL,
+	[Postal_Code] [varchar](max) NULL,
+	[Province] [varchar](max) NULL,
+	[date_Of_Birth] [varchar](max) NULL,
+	[latest_recording_url] [varchar](max) NULL,
+	[Disposition] [varchar](max) NULL,
+	[Lead_Id_From_Dialer] [varchar](max) NULL,
+	[list_id] [varchar](max) NULL,
+	[Lead_Priority] [varchar](max) NULL,
+	[Campaign_Id] [varchar](max) NULL,
+	[Lead_Category] [varchar](max) NULL,
+	[Lead_Conversion] [varchar](max) NULL,
+	[Conversion_Amount] [varchar](max) NULL,
+	[Comment] [varchar](max) NULL,
+	[Call_Notes] [varchar](max) NULL,
+	[HangUp_Reason] [varchar](max) NULL,
+	[Disposition2] [varchar](max) NULL,
+	[Doer] [varchar](max) NULL,
+	[Send_To_Remarks_Sheet_TimeStamp] [varchar](max) NULL,
+	[send_lead_Date_Time] [varchar](max) NULL,
+	[SentTo_Next_Step_TimeStamp] [varchar](max) NULL,
+	[sent_status_call_ReAudit] [varchar](max) NULL,
+	[Call_Type] [varchar](max) NULL,
+	[Call_Recording_Duration] [varchar](max) NULL,
+	[Drop_Leads_Recycle_Status] [varchar](max) NULL,
+	[column48] [varchar](max) NULL,
+	[column49] [varchar](max) NULL,
+	[column50] [varchar](max) NULL,
+	[column51] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+
+CREATE TABLE dbo.DialShree_Kairali_Received_detail (
+
+      [Lead_id] [varchar](max) NULL,
+    [Assign_To_MR_Main_Agent_Name] VARCHAR(MAX) NULL, 
+    [Remarks_History] VARCHAR(MAX) NULL,
+    [SQV_Lead_Intent] VARCHAR(MAX) NULL,
+    [Campaign_NAME] VARCHAR(MAX) NULL,
+    [call_Count] VARCHAR(MAX) NULL,
+    [agent_Id] VARCHAR(MAX) NULL,
+    [latest_called_at] VARCHAR(MAX) NULL,
+    [customer_Name] VARCHAR(MAX) NULL,
+    [Alt_Phone] VARCHAR(MAX) NULL,
+    [Address] VARCHAR(MAX) NULL,
+    [City] VARCHAR(MAX) NULL,
+    [State] VARCHAR(MAX) NULL,
+    [Postal_Code] VARCHAR(MAX) NULL,
+    [Province] VARCHAR(MAX) NULL,
+    [date_Of_Birth] VARCHAR(MAX) NULL,
+    [latest_recording_url] VARCHAR(MAX) NULL,
+    [Disposition] VARCHAR(MAX) NULL,
+    [Lead_Id_From_Dialer] VARCHAR(MAX) NULL
+
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+
+INSERT INTO dbo.DialShree_Kairali_Received_detail (
+    Lead_id,
+    Assign_To_MR_Main_Agent_Name,
+    Remarks_History,
+    SQV_Lead_Intent,
+    Campaign_NAME,
+    call_Count,
+    agent_Id,
+    latest_called_at,
+    customer_Name,
+    Alt_Phone,
+    Address,
+    City,
+    State,
+    Postal_Code,
+    Province,
+    date_Of_Birth,
+    latest_recording_url,
+    Disposition,
+    Lead_Id_From_Dialer
+
+)
+SELECT
+  Lead_id,
+    Assign_To_MR_Main_Agent_Name,
+    Remarks_History,
+    SQV_Lead_Intent,
+    Campaign_NAME,
+    call_Count,
+    agent_Id,
+    latest_called_at,
+    customer_Name,
+    Alt_Phone,
+    Address,
+    City,
+    State,
+    Postal_Code,
+    Province,
+    date_Of_Birth,
+    latest_recording_url,
+    Disposition,
+    Lead_Id_From_Dialer
+
+FROM [dbo].[DialShree-Kairali-Received API];
+
+
+CREATE TABLE dbo.DialShree_Kairali_Received_additional_detail (
+
+    [list_id] VARCHAR(MAX) NULL,
+    [Lead_Priority] VARCHAR(MAX) NULL,
+    [Campaign_Id] VARCHAR(MAX) NULL,
+    [Lead_Category] VARCHAR(MAX) NULL,
+    [Lead_Conversion] VARCHAR(MAX) NULL,
+    [Conversion_Amount] VARCHAR(MAX) NULL,
+    [Comment] VARCHAR(MAX) NULL,
+    [Call_Notes] VARCHAR(MAX) NULL,
+    [HangUp_Reason] VARCHAR(MAX) NULL,
+    [Disposition2] VARCHAR(MAX) NULL,
+    [Doer] VARCHAR(MAX) NULL,
+    [Send_To_Remarks_Sheet_TimeStamp] VARCHAR(MAX) NULL,
+    [send_lead_Date_Time] VARCHAR(MAX) NULL,
+    [SentTo_Next_Step_TimeStamp] VARCHAR(MAX) NULL,
+    [sent_status_call_ReAudit] VARCHAR(MAX) NULL,
+    [Call_Type] VARCHAR(MAX) NULL,
+    [Call_Recording_Duration] VARCHAR(MAX) NULL,
+    [Drop_Leads_Recycle_Status] VARCHAR(MAX) NULL
+
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+
+
+INSERT INTO dbo.DialShree_Kairali_Received_additional_detail (
+
+    list_id,
+    Lead_Priority,
+    Campaign_Id,
+    Lead_Category,
+    Lead_Conversion,
+    Conversion_Amount,
+    Comment,
+    Call_Notes,
+    HangUp_Reason,
+    Disposition2,
+    Doer,
+    Send_To_Remarks_Sheet_TimeStamp,
+    send_lead_Date_Time,
+    SentTo_Next_Step_TimeStamp,
+    sent_status_call_ReAudit,
+    Call_Type,
+    Call_Recording_Duration,
+    Drop_Leads_Recycle_Status
+
+)
+SELECT
+
+    list_id,
+    Lead_Priority,
+    Campaign_Id,
+    Lead_Category,
+    Lead_Conversion,
+    Conversion_Amount,
+    Comment,
+    Call_Notes,
+    HangUp_Reason,
+    Disposition2,
+    Doer,
+    Send_To_Remarks_Sheet_TimeStamp,
+    send_lead_Date_Time,
+    SentTo_Next_Step_TimeStamp,
+    sent_status_call_ReAudit,
+    Call_Type,
+    Call_Recording_Duration,
+    Drop_Leads_Recycle_Status
+
+FROM [dbo].[DialShree-Kairali-Received API];
