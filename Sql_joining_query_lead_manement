@@ -1,3 +1,109 @@
+SELECT TOP (1000) [Lead_id]
+      ,[Assign_To_MR_Main_Agent_Name]
+      ,[Remarks_History]
+      ,[SQV_Lead_Intent]
+      ,[Campaign_NAME]
+      ,[call_Count]
+      ,[agent_Id]
+      ,[latest_called_at]
+      ,[customer_Name]
+      ,[Alt_Phone]
+      ,[Address]
+      ,[City]
+      ,[State]
+      ,[Postal_Code]
+      ,[Province]
+      ,[date_Of_Birth]
+      ,[latest_recording_url]
+      ,[Disposition]
+      ,[Lead_Id_From_Dialer]
+      ,[Id]
+  FROM [LeadManagement1].[dbo].[DialShree_Kairali_Received_detail]
+
+
+SELECT TOP (1000) [Lead_id]
+      ,[Lead_Priority]
+      ,[Campaign_Id]
+      ,[Lead_Category]
+      ,[Lead_Conversion]
+      ,[Conversion_Amount]
+      ,[Comment]
+      ,[Call_Notes]
+      ,[HangUp_Reason]
+      ,[Disposition2]
+      ,[Doer]
+      ,[Send_To_Remarks_Sheet_TimeStamp]
+      ,[send_lead_Date_Time]
+      ,[SentTo_Next_Step_TimeStamp]
+      ,[sent_status_call_ReAudit]
+      ,[Call_Type]
+      ,[Call_Recording_Duration]
+      ,[Drop_Leads_Recycle_Status]
+      ,[Id]
+  FROM [LeadManagement1].[dbo].[DialShree_Received_additional_detail]
+
+SELECT TOP (1000) [updated_at]
+      ,[created_at]
+      ,[Lead_id]
+      ,[Name_of_Client]
+      ,[Mobile]
+      ,[Email_Id]
+      ,[Subjects]
+      ,[Notes]
+      ,[IVR_URL]
+      ,[WebSite_Name]
+      ,[Data_Source]
+      ,[Verified_Source]
+      ,[Id]
+  FROM [LeadManagement1].[dbo].[new_buffer_master_all]
+
+
+  SELECT *
+FROM [LeadManagement1].[dbo].[new_buffer_master_all] m
+JOIN DialShree_Received_additional_detail c1 
+    ON m.Lead_id = c1.Lead_id
+JOIN DialShree_Kairali_Received_detail c2 
+    ON c1.Lead_id = c2.Lead_id
+WHERE m.Lead_id ='VR_1766928619862-132';
+
+
+SELECT *
+FROM new_buffer_master_all m
+JOIN DialShree_Received_additional_detail c1 
+    ON m.Lead_id = c1.Lead_id
+JOIN DialShree_Kairali_Received_detail c2 
+    ON c1.Lead_id = c2.Lead_id
+   AND c1.id = c2.id
+WHERE m.Lead_id ='VR_1766928619862-132';
+
+SELECT *
+FROM new_buffer_master_all m
+INNER JOIN DialShree_Received_additional_detail c1 
+    ON m.Lead_id = c1.Lead_id
+INNER JOIN DialShree_Kairali_Received_detail c2 
+    ON c1.Lead_id = c2.Lead_id
+   AND c1.id = c2.id
+WHERE m.Lead_id ='VR_1766928619862-132'
+ORDER BY c2.latest_called_at DESC;
+
+-- 1️⃣ Parent table
+SELECT *
+FROM new_buffer_master_all
+WHERE Lead_id = 'VR_1766928619862-132';
+
+
+-- 2️⃣ Additional detail table
+SELECT *
+FROM DialShree_Received_additional_detail
+WHERE Lead_id = 'VR_1766928619862-132';
+
+
+-- 3️⃣ Kairali detail table
+SELECT *
+FROM DialShree_Kairali_Received_detail
+WHERE Lead_id = 'VR_1766928619862-132';
+
+************************************************************************************************************************************************
 SELECT Lead_id, latest_called_at AS Followup_Time, Disposition, 'Detail Table' AS Source
 FROM dbo.DialShree_Kairali_Received_detail
 
@@ -7,3 +113,5 @@ SELECT Lead_id, send_lead_Date_Time, Lead_Category, 'Additional Table'
 FROM dbo.DialShree_Kairali_Received_additional_detail
 
 ORDER BY Lead_id, Followup_Time;
+
+
