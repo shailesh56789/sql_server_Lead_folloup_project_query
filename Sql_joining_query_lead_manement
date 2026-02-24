@@ -1,0 +1,9 @@
+SELECT Lead_id, latest_called_at AS Followup_Time, Disposition, 'Detail Table' AS Source
+FROM dbo.DialShree_Kairali_Received_detail
+
+UNION ALL
+
+SELECT Lead_id, send_lead_Date_Time, Lead_Category, 'Additional Table'
+FROM dbo.DialShree_Kairali_Received_additional_detail
+
+ORDER BY Lead_id, Followup_Time;
