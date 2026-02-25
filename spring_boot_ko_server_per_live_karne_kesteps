@@ -1,0 +1,135 @@
+Bilkul bhai 👍
+Agar aapko apna Spring Boot project Kairali server par live karna hai, to main aapko complete production-ready steps deta hoon 👇
+
+🎯 High Level Flow
+Local Machine → Build JAR → Upload to Server → Configure DB → Run → Live URL
+✅ STEP 1: Production Build Banaye
+
+Apne project folder me jaake:
+
+mvn clean package
+
+Ya agar Gradle hai:
+
+gradle build
+
+Isse target folder me .jar file ban jayegi.
+
+Example:
+
+LeadManagement-api-0.0.1-SNAPSHOT.jar
+✅ STEP 2: Server Requirements Check Kare
+
+Kairali server par ye hona chahiye:
+
+✔ Java installed (Java 17 ya 21)
+✔ SQL Server running
+✔ Required port open (8080 ya custom)
+
+Server par Java check kare:
+
+java -version
+
+Agar Java nahi hai to install karna padega.
+
+✅ STEP 3: Application Properties Production Mode Me Change Kare
+
+application.properties me:
+
+spring.datasource.url=jdbc:sqlserver://SERVER_IP:1433;databaseName=LeadManagement1
+spring.datasource.username=your_user
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=none
+server.port=8080
+
+⚠ Production me ddl-auto=update mat rakho.
+
+✅ STEP 4: JAR File Server Par Upload Kare
+
+Upload karne ke options:
+
+RDP se copy paste
+
+WinSCP
+
+FileZilla
+
+FTP
+
+IT team ko bhejna
+
+Example path:
+
+C:\apps\LeadManagement\
+✅ STEP 5: Server Par Run Kare
+
+Server ke CMD me:
+
+cd C:\apps\LeadManagement
+java -jar LeadManagement-api-0.0.1-SNAPSHOT.jar
+
+Agar sab sahi hua to:
+
+Tomcat started on port(s): 8080
+Started Application in X seconds
+✅ STEP 6: Browser Me Check Kare
+
+Agar server IP hai:
+
+http://SERVER_IP:8080
+
+Agar domain mapped hai:
+
+https://kairali.in
+🔥 OPTIONAL (Recommended for Production)
+✔ Background Service Banaye
+
+Taaki app band na ho jab CMD close ho.
+
+Windows me:
+
+NSSM (Non-Sucking Service Manager) use kare
+
+Ya Windows Service bana de
+
+Linux me:
+
+systemd service bana de
+
+🔥 Professional Setup (Best Practice)
+Nginx / IIS (Reverse Proxy)
+       ↓
+Spring Boot (Port 8080)
+       ↓
+SQL Server
+
+Isse:
+
+✔ HTTPS milega
+✔ Port hide hoga
+✔ Security better hogi
+
+🚨 Common Errors
+Problem	Reason
+Port already in use	8080 busy
+DB connection fail	Firewall block
+App stop after close	Background service nahi
+🎯 Final Checklist
+
+✔ DB restore ho gaya
+✔ DB remote access working
+✔ application.properties updated
+✔ JAR uploaded
+✔ Java installed
+✔ Port open
+
+Ab mujhe ye batao 👇
+
+Server Windows hai ya Linux?
+
+Aapko RDP mila hai?
+
+Domain already hai ya sirf IP se chalana hai?
+
+Main aapko exact production deployment guide bana dunga 💪
