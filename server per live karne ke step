@@ -1,0 +1,106 @@
+Bilkul 👍 aapka goal clear hai:
+
+Local SQL Server ka database → Company Server par live ho
+→ Spring Boot application usko access kare (production me)
+
+Main aapko complete production flow bata raha hoon 👇
+
+🎯 STEP 1: Local Database ka Backup Lo
+
+Local machine par:
+
+SSMS open karo
+
+Database par Right Click
+
+Tasks → Back Up
+
+Backup type = Full
+
+.bak file generate karo
+
+Example file:
+
+LeadManagement1.bak
+🎯 STEP 2: Server Par Database Restore Karwana
+
+⚠ Agar aapke paas RDP ya SQL login nahi hai
+to IT team ko ye file bhejni hogi.
+
+Unko ye restore karna hoga:
+
+RESTORE DATABASE LeadManagement1
+FROM DISK = 'D:\SQLBackup\LeadManagement1.bak'
+WITH REPLACE;
+🎯 STEP 3: Server Details Lena (VERY IMPORTANT)
+
+IT team se ye details lo:
+
+✅ Server IP
+
+✅ Port (usually 1433)
+
+✅ Database name
+
+✅ SQL Username
+
+✅ SQL Password
+
+Example:
+
+IP: 103.xx.xx.xx
+Port: 1433
+DB: LeadManagement1
+User: kairali_user
+Pass: ********
+🎯 STEP 4: Spring Boot Me Connection Change Karo
+
+application.properties me:
+
+spring.datasource.url=jdbc:sqlserver://103.xx.xx.xx:1433;databaseName=LeadManagement1
+spring.datasource.username=kairali_user
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=false
+
+⚠ Production me ddl-auto=update mat rakhna.
+
+🎯 STEP 5: Server Firewall Check
+
+IT team ko bolna hoga:
+
+Port 1433 open ho
+
+Remote connection enable ho
+
+TCP/IP enabled ho
+
+🎯 STEP 6: Application Server Par Deploy Karo
+
+Agar aapka Spring Boot app bhi server par live hai:
+
+java -jar LeadManagement-api.jar
+
+Ya Tomcat par deploy karo.
+
+🚨 Common Problems
+Problem	Reason
+Connection timeout	Firewall block
+Login failed	Wrong username/password
+Cannot open database	Permission issue
+🔥 Final Architecture
+User → Live Spring Boot App → Server SQL Database
+
+Local DB ka koi role nahi rahega.
+
+💡 Important Question
+
+Aapka Spring Boot app:
+
+Already server par deployed hai?
+
+Ya abhi local machine se connect karna chahte ho remote DB ko?
+
+Ye bata do to main exact next step bata dunga 💪
