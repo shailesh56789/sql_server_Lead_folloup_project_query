@@ -1,0 +1,137 @@
+SELECT TOP (1000) [Lead_id]
+      ,[Lead_Relates_to_which_company]
+      ,[Name_of_User]
+      ,[Phone_Number_of_User]
+      ,[Email_of_User]
+      ,[Country]
+      ,[Priority]
+      ,[Urgency_YES_NO]
+      ,[Contact_Time]
+      ,[Summary_of_Conversation]
+      ,[Lead_Outcome]
+      ,[Lead_Category]
+      ,[Preferred_Way_to_Contact]
+      ,[gpt_Extraction_Status]
+      ,[Sent_status]
+      ,[Test_Col]
+      ,[Mail_Status]
+      ,[Reason_why_assign_Or_Delete]
+      ,[Id]
+  FROM [LeadManagement1].[dbo].[new_buffer_additional_detail]
+
+      select *from [LeadManagement1].[dbo].[new_buffer_additional_detail] where Lead_id='LEAD0012';
+
+
+  select *from [LeadManagement1].[dbo].[new_buffer_additional_detail] where Lead_id='Client-Priya919687036229_1';
+
+
+  --Client-Priya919687036229_1
+  select *from [LeadManagement1].[dbo].new_buffer_detail where Lead_id='Client-Priya919687036229_1';
+  select *from [LeadManagement1].[dbo].new_buffer_detail where Lead_id='Client-Priya919687036229_1';
+  select *from [LeadManagement1].[dbo].new_buffer_master_all where Lead_id='Client-Priya919687036229_1';
+
+
+   select *from [LeadManagement1].[dbo].new_buffer_additional_detail where Lead_id='LEAD0012_1';
+  select *from [LeadManagement1].[dbo].new_buffer_detail where Lead_id='KTAHV-12022';
+  select *from [LeadManagement1].[dbo].new_buffer_master_all where Lead_id='LEAD0012';
+
+
+   use LeadManagement1
+   go
+  -- Step 1: Delete from TableA
+DELETE A
+FROM new_buffer_additional_detail A
+JOIN new_buffer_master_all M
+    ON A.Lead_id = M.Lead_id
+WHERE M.Lead_id = 'LEAD0012';
+
+-- Step 2: Delete from TableB
+DELETE B
+FROM new_buffer_detail B
+JOIN new_buffer_master_all M
+    ON B.Lead_id = M.Lead_id
+WHERE M.Lead_id = 'LEAD0012';
+
+-- Step 3: Delete from MasterTable
+DELETE FROM new_buffer_master_all
+WHERE Lead_id = 'LEAD0012';
+
+
+
+  -- Step 1: Delete from TableA
+DELETE A
+FROM new_buffer_additional_detail A
+JOIN new_buffer_master_all M
+    ON A.Lead_id = M.Lead_id
+WHERE M.Lead_id = 'LEAD0012';
+
+-- Step 2: Delete from TableB
+DELETE B
+FROM new_buffer_detail B
+JOIN new_buffer_master_all M
+    ON B.Lead_id = M.Lead_id
+WHERE M.Lead_id = 'LEAD0012';
+
+-- Step 3: Delete from MasterTable
+DELETE FROM new_buffer_master_all
+WHERE Lead_id = 'LEAD0012';
+
+
+SELECT COUNT(*) AS TotalRows
+FROM new_buffer_additional_detail;
+
+
+SELECT COUNT(*) AS TotalRows
+FROM new_buffer_master_all;
+
+SELECT COUNT(*) AS TotalRows
+FROM new_buffer_detail;
+
+
+SELECT Lead_id, COUNT(*) 
+FROM new_buffer_detail
+GROUP BY Lead_id
+HAVING COUNT(*) > 1;
+
+SELECT Lead_id, COUNT(*) 
+FROM new_buffer_additional_detail
+GROUP BY Lead_id
+HAVING COUNT(*) > 1;
+
+SELECT Lead_id, COUNT(*) 
+FROM new_buffer_master_all
+GROUP BY Lead_id
+HAVING COUNT(*) > 1;
+
+
+SELECT *
+FROM new_buffer_master_all
+WHERE Lead_id = '-';
+
+
+SELECT *
+FROM new_buffer_detail
+WHERE Lead_id = '-';
+
+DELETE FROM new_buffer_detail
+WHERE Lead_id = '-';
+
+DELETE FROM new_buffer_additional_detail
+WHERE Lead_id = '-';
+
+WITH CTE AS (
+    SELECT Id,
+           ROW_NUMBER() OVER (PARTITION BY Lead_id ORDER BY Id DESC) AS rn
+    FROM new_buffer_detail
+)
+DELETE FROM CTE
+WHERE rn > 1;
+
+
+WITH CTE AS (
+    SELECT Id,
+           ROW_NUMBER() OVER (PARTITION BY Lead_id ORDER BY Id DESC) AS rn
+    FROM new_buffer_additional_detail
+)
+DELETE FROM CTE
+WHERE rn > 1;
