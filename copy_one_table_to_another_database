@@ -1,0 +1,169 @@
+USE [LeadManagement]
+GO
+
+/****** Object:  Table [dbo].[staging_buffer]    Script Date: 28-02-2026 12:57:24 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[staging_buffer](
+	[Timestamp] [datetime2](7) NOT NULL,
+	[Date_Time] [nvarchar](50) NOT NULL,
+	[ID] [nvarchar](255) NOT NULL,
+	[Name_of_Client] [nvarchar](255) NULL,
+	[Mobile] [nvarchar](255) NULL,
+	[Email_Id] [nvarchar](255) NULL,
+	[Subjects] [nvarchar](1048) NULL,
+	[Notes] [nvarchar](max) NOT NULL,
+	[IVR_URL] [nvarchar](150) NULL,
+	[WebSite_Name] [nvarchar](100) NULL,
+	[Data_Source] [nvarchar](1048) NULL,
+	[Assign_To_MR_Main] [nvarchar](512) NULL,
+	[Timestamp_2] [date] NULL,
+	[column14] [nvarchar](1) NULL,
+	[Year] [smallint] NOT NULL,
+	[Month] [tinyint] NOT NULL,
+	[Week] [tinyint] NOT NULL,
+	[Intent] [nvarchar](50) NULL,
+	[Duplicate] [nvarchar](50) NOT NULL,
+	[Sheet_Name] [nvarchar](1) NULL,
+	[UTM_Campaign_Name] [nvarchar](1) NULL,
+	[UTM_Adgroup_Name] [nvarchar](1) NULL,
+	[Enquiry_Status_Last] [nvarchar](1) NULL,
+	[Converted_Amount] [nvarchar](1) NULL,
+	[Converted_Date] [nvarchar](1) NULL,
+	[Order_Taken_By] [nvarchar](1) NULL,
+	[status] [nvarchar](50) NULL,
+	[NBD_CRR] [nvarchar](50) NOT NULL,
+	[KAPPL_KTAHV] [nvarchar](50) NOT NULL,
+	[Transcription] [nvarchar](max) NULL,
+	[Lead_Relates_to_which_company] [nvarchar](350) NULL,
+	[Name_of_User] [nvarchar](50) NULL,
+	[Phone_Number_of_User] [nvarchar](50) NULL,
+	[Email_of_User] [nvarchar](255) NULL,
+	[Country] [nvarchar](50) NULL,
+	[Priority] [nvarchar](50) NULL,
+	[Urgency_YES_NO] [nvarchar](50) NULL,
+	[Contact_Time] [datetime2](7) NULL,
+	[Summary_of_Conversation] [nvarchar](3100) NULL,
+	[Lead_Outcome] [nvarchar](255) NULL,
+	[Lead_Category] [nvarchar](50) NULL,
+	[Preferred_Way_to_Contact] [nvarchar](50) NULL,
+	[gpt_Extraction_Status] [datetime2](7) NOT NULL,
+	[Sent_status] [date] NOT NULL,
+	[Test_Col] [nvarchar](10) NULL,
+	[Mail_Status] [nvarchar](100) NULL,
+	[Reason_why_assign_Or_Delete] [nvarchar](150) NULL,
+	[Verified_Source] [nvarchar](50) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+
+
+USE [LeadManagement];
+GO
+
+-- Table Create karo
+CREATE TABLE [dbo].[staging_buffer_new] (
+  [Assign_To_MR_Main]          NVARCHAR(512) NULL,
+  [Timestamp_2]                DATE NULL,
+  [column14]                   NVARCHAR(1) NULL,
+  [Year]                       SMALLINT NULL,        -- NOT NULL hataya MySQL compatibility ke liye
+  [Month]                      TINYINT NULL,         -- NOT NULL hataya MySQL compatibility ke liye
+  [Week]                       TINYINT NULL,         -- NOT NULL hataya MySQL compatibility ke liye
+  [Intent]                     NVARCHAR(50) NULL,
+  [Duplicate]                  NVARCHAR(50) NULL,    -- NOT NULL hataya MySQL compatibility ke liye
+  [Sheet_Name]                 NVARCHAR(50) NULL,    -- VARCHAR(1) se badha ke 50 kiya
+  [UTM_Campaign_Name]          NVARCHAR(255) NULL,   -- VARCHAR(1) se badha ke 255 kiya
+  [UTM_Adgroup_Name]           NVARCHAR(255) NULL,   -- VARCHAR(1) se badha ke 255 kiya
+  [Enquiry_Status_Last]        NVARCHAR(100) NULL,   -- VARCHAR(1) se badha ke 100 kiya
+  [Converted_Amount]           NVARCHAR(100) NULL,   -- VARCHAR(1) se badha ke 100 kiya
+  [Converted_Date]             NVARCHAR(50) NULL,    -- VARCHAR(1) se badha ke 50 kiya
+  [Order_Taken_By]             NVARCHAR(100) NULL,   -- VARCHAR(1) se badha ke 100 kiya
+  [status]                     NVARCHAR(50) NULL,
+  [NBD_CRR]                    NVARCHAR(50) NULL,    -- NOT NULL hataya MySQL compatibility ke liye
+  [KAPPL_KTAHV]                NVARCHAR(50) NULL,    -- NOT NULL hataya MySQL compatibility ke liye
+  [Transcription]              NVARCHAR(MAX) NULL,
+  [Lead_Relates_to_which_company] NVARCHAR(350) NULL,
+  [Name_of_User]               NVARCHAR(50) NULL,
+  [Phone_Number_of_User]       NVARCHAR(50) NULL,
+  [Email_of_User]              NVARCHAR(255) NULL,
+  [Country]                    NVARCHAR(50) NULL,
+  [Priority]                   NVARCHAR(50) NULL,
+  [Urgency_YES_NO]             NVARCHAR(50) NULL,
+  [Contact_Time]               DATETIME2(6) NULL,
+  [Summary_of_Conversation]    NVARCHAR(3100) NULL,
+  [Lead_Outcome]               NVARCHAR(255) NULL,
+  [Lead_Category]              NVARCHAR(50) NULL,
+  [Preferred_Way_to_Contact]   NVARCHAR(50) NULL,
+  [gpt_Extraction_Status]      DATETIME2(6) NULL,   -- NOT NULL hataya MySQL compatibility ke liye
+  [Sent_status]                DATE NULL,            -- NOT NULL hataya MySQL compatibility ke liye
+  [Test_Col]                   NVARCHAR(10) NULL,
+  [Mail_Status]                NVARCHAR(100) NULL,
+  [Reason_why_assign_Or_Delete] NVARCHAR(150) NULL,
+
+) ON [PRIMARY];
+GO
+
+-- Data Copy karo
+INSERT INTO [dbo].[staging_buffer_new] (
+  [Assign_To_MR_Main], [Timestamp_2], [column14], [Year], [Month], [Week],
+  [Intent], [Duplicate], [Sheet_Name], [UTM_Campaign_Name], [UTM_Adgroup_Name],
+  [Enquiry_Status_Last], [Converted_Amount], [Converted_Date], [Order_Taken_By],
+  [status], [NBD_CRR], [KAPPL_KTAHV], [Transcription], [Lead_Relates_to_which_company],
+  [Name_of_User], [Phone_Number_of_User], [Email_of_User], [Country], [Priority],
+  [Urgency_YES_NO], [Contact_Time], [Summary_of_Conversation], [Lead_Outcome],
+  [Lead_Category], [Preferred_Way_to_Contact], [gpt_Extraction_Status], [Sent_status],
+  [Test_Col], [Mail_Status], [Reason_why_assign_Or_Delete]
+)
+SELECT
+  [Assign_To_MR_Main], [Timestamp_2], [column14], [Year], [Month], [Week],
+  [Intent], [Duplicate], [Sheet_Name], [UTM_Campaign_Name], [UTM_Adgroup_Name],
+  [Enquiry_Status_Last], [Converted_Amount], [Converted_Date], [Order_Taken_By],
+  [status], [NBD_CRR], [KAPPL_KTAHV], [Transcription], [Lead_Relates_to_which_company],
+  [Name_of_User], [Phone_Number_of_User], [Email_of_User], [Country], [Priority],
+  [Urgency_YES_NO], [Contact_Time], [Summary_of_Conversation], [Lead_Outcome],
+  [Lead_Category], [Preferred_Way_to_Contact], [gpt_Extraction_Status], [Sent_status],
+  [Test_Col], [Mail_Status], [Reason_why_assign_Or_Delete]
+FROM [dbo].[staging_buffer];
+GO
+
+-- Verify karo kitne rows copy hue
+SELECT COUNT(*) AS Total_Rows FROM [dbo].[staging_buffer_new];
+
+
+
+
+
+SELECT
+  [Assign_To_MR_Main], [Timestamp_2], [column14], [Year], [Month], [Week],
+  [Intent], [Duplicate], [Sheet_Name], [UTM_Campaign_Name], [UTM_Adgroup_Name],
+  [Enquiry_Status_Last], [Converted_Amount], [Converted_Date], [Order_Taken_By],
+  [status], [NBD_CRR], [KAPPL_KTAHV], [Transcription], [Lead_Relates_to_which_company],
+  [Name_of_User], [Phone_Number_of_User], [Email_of_User], [Country], [Priority],
+  [Urgency_YES_NO], [Contact_Time], [Summary_of_Conversation], [Lead_Outcome],
+  [Lead_Category], [Preferred_Way_to_Contact], [gpt_Extraction_Status], [Sent_status],
+  [Test_Col], [Mail_Status], [Reason_why_assign_Or_Delete], [Verified_Source]
+FROM [dbo].[staging_buffer];
+
+
+SELECT COUNT(*) FROM [dbo].[staging_buffer_new];
+
+SELECT @@SERVERNAME
+
+USE [LeadManagement];
+SELECT * FROM [dbo].[staging_buffer_new]
+
+
+create database gh;
+
+
+USE LeadManagement;
+SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE';
+
+
+SELECT * INTO [gh].[dbo].[staging_buffer_new]
+FROM [LeadManagement].[dbo].[staging_buffer_new];
