@@ -1,0 +1,308 @@
+SELECT * FROM test.staging_buffer_new;
+
+use test
+SELECT * FROM followup_activity WHERE lead_id = 'VR_1766928619862-132'
+
+SELECT * FROM followup_communication 
+WHERE Lead_id = 'VR_1766928619862-132';
+
+SELECT * FROM master_buffer 
+WHERE Lead_id = 'VR_1766928619862-132';
+
+SHOW CREATE TABLE followup_activity;
+SHOW CREATE TABLE followup_communication;
+SHOW CREATE TABLE master_buffer;
+SHOW CREATE TABLE staging_buffer_new;
+
+CREATE INDEX idx_master_name
+ON master_buffer (Name_of_Client);
+
+SELECT *
+FROM master_buffer m
+INNER JOIN followup_communication c1 
+    ON m.Lead_id = c1.Lead_id
+INNER JOIN followup_activity c2 
+    ON c1.Lead_id = c2.Lead_id
+   AND c1.sl_no = c2.sl_no
+WHERE m.Lead_id ='VR_1766928619862-132'
+ORDER BY c2.sl_no DESC;
+
+
+SELECT *
+FROM master_buffer m
+INNER JOIN followup_communication c1 
+    ON m.Lead_id = c1.Lead_id
+INNER JOIN followup_activity c2 
+    ON c1.Lead_id = c2.Lead_id
+   AND c1.sl_no = c2.sl_no
+WHERE m.Mobile ='917211177772,'
+ORDER BY c2.sl_no DESC;
+
+
+SELECT *
+FROM master_buffer m
+INNER JOIN followup_communication c1 
+    ON m.Lead_id = c1.Lead_id
+INNER JOIN followup_activity c2 
+    ON c1.Lead_id = c2.Lead_id
+   AND c1.sl_no = c2.sl_no
+WHERE m.Name_of_Client ='Hitesh Kumar '
+ORDER BY c2.sl_no DESC;
+
+SELECT *
+FROM master_buffer m
+INNER JOIN followup_communication c1 
+    ON m.Lead_id = c1.Lead_id
+INNER JOIN followup_activity c2 
+    ON c1.Lead_id = c2.Lead_id
+   AND c1.sl_no = c2.sl_no
+WHERE m.Email_Id ='Kiritsinhmori@gmail.com'
+ORDER BY c2.sl_no DESC;
+
+
+ORDER BY c2.latest_called_at DESC;
+
+
+
+SELECT 
+    m.lead_id,
+    m.mobile,
+    m.Email_Id,
+    fa.*,
+    fa_count.Total_Followups
+FROM master_buffer m
+
+LEFT JOIN followup_activity fa
+    ON m.lead_id = fa.lead_id
+
+LEFT JOIN (
+    SELECT lead_id, COUNT(*) AS Total_Followups
+    FROM followup_activity
+    GROUP BY lead_id
+) fa_count
+    ON m.lead_id = fa_count.lead_id
+
+WHERE m.lead_id = 'VR_1766928619862-132'
+
+ORDER BY fa.sl_no DESC;
+
+
+
+
+ALTER TABLE staging_buffer_new
+ADD COLUMN sl_no INT NOT NULL AUTO_INCREMENT UNIQUE;
+
+
+
+  SELECT
+    mb.lead_id,
+    mb.Name_of_Client,
+    mb.Mobile,
+    mb.Email_Id,
+    mb.Subjects,
+    mb.Notes,
+    mb.IVR_URL,
+    mb.WebSite_Name,
+    mb.Data_Source,
+    mb.Verified_Source,
+    mb.actual_time,
+    mb.sheet_name AS master_sheet_name,
+    sbn.Assign_To_MR_Main,
+    sbn.Timestamp_2,
+    sbn.column14,
+    sbn.Year,
+    sbn.Month,
+    sbn.Week,
+    sbn.Intent,
+    sbn.Duplicate,
+    sbn.Sheet_Name AS staging_sheet_name,
+    sbn.UTM_Campaign_Name,
+    sbn.UTM_Adgroup_Name,
+    sbn.Enquiry_Status_Last,
+    sbn.Converted_Amount,
+    sbn.Converted_Date,
+    sbn.Order_Taken_By,
+    sbn.status,
+    sbn.NBD_CRR,
+    sbn.KAPPL_KTAHV,
+    sbn.Transcription,
+    sbn.Lead_Relates_to_which_company,
+    sbn.Name_of_User,
+    sbn.Phone_Number_of_User,
+    sbn.Email_of_User,
+    sbn.Country,
+    sbn.Priority,
+    sbn.Urgency_YES_NO,
+    sbn.Contact_Time,
+    sbn.Summary_of_Conversation,
+    sbn.Lead_Outcome,
+    sbn.Lead_Category,
+    sbn.Preferred_Way_to_Contact,
+    sbn.gpt_Extraction_Status,
+    sbn.Sent_status,
+    sbn.Test_Col,
+    sbn.Mail_Status,
+    sbn.Reason_why_assign_Or_Delete
+  FROM master_buffer mb
+  INNER JOIN staging_buffer_new sbn ON mb.lead_id = sbn.lead_id
+  WHERE mb.lead_id='VR_1766928619862-132'
+  
+  
+  CREATE UNIQUE INDEX idx_sbn_lead_id
+ON staging_buffer_new (lead_id);
+
+CREATE INDEX idx_sbn_lead_id
+ON staging_buffer_new (lead_id);
+
+SELECT 
+*FROM master_buffer mb
+INNER JOIN staging_buffer_new sbn 
+ON mb.lead_id = sbn.lead_id
+WHERE mb.lead_id='VR_1766928619862-132'
+ORDER BY sbn.sl_no DESC
+LIMIT 1;
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+SELECT * FROM test.staging_buffer_new;
+
+use test;
+
+CREATE INDEX idx_fc_leadid_slno
+ON followup_communication (lead_id, sl_no);
+
+CREATE INDEX idx_activity_leadid_slno
+ON followup_activity (lead_id, sl_no);
+
+CREATE INDEX idx_activity_leadid_slno_desc
+ON followup_activity (lead_id, sl_no DESC);
+
+
+
+
+SHOW CREATE TABLE followup_activity;
+SHOW CREATE TABLE followup_communication;
+SHOW CREATE TABLE master_buffer;
+ALTER TABLE followup_activity
+DROP PRIMARY KEY;
+
+ALTER TABLE followup_activity
+MODIFY sl_no BIGINT(20) NULL;
+
+UPDATE followup_activity
+SET sl_no = NULL;
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE followup_activity
+SET sl_no = NULL;
+
+ALTER TABLE followup_activity
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE followup_activity
+MODIFY sl_no BIGINT(20) NOT NULL;
+
+ALTER TABLE followup_activity
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT,
+ADD PRIMARY KEY (sl_no);
+
+----followup_communication---------------
+
+use test;
+
+SHOW CREATE TABLE followup_communication;
+ALTER TABLE followup_communication
+DROP PRIMARY KEY;
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20)  NULL;
+
+ALTER TABLE followup_communication
+DROP PRIMARY KEY;
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NOT NULL;
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NULL;
+
+UPDATE followup_communication
+SET sl_no = NULL;
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE followup_communication
+SET sl_no = NULL;
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NULL;
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT,
+ADD PRIMARY KEY (sl_no);
+
+SHOW CREATE TABLE followup_communication;
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE followup_communication
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
+
+----master_buffer---------------
+
+use test;
+
+SHOW CREATE TABLE master_buffer;
+ALTER TABLE master_buffer
+DROP PRIMARY KEY;
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20)  NULL;
+
+ALTER TABLE master_buffer
+DROP PRIMARY KEY;
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NOT NULL;
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NULL;
+
+UPDATE master_buffer
+SET sl_no = NULL;
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE master_buffer
+SET sl_no = NULL;
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NULL;
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT,
+ADD PRIMARY KEY (sl_no);
+
+SHOW CREATE TABLE master_buffer;
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE master_buffer
+MODIFY sl_no BIGINT(20) NOT NULL AUTO_INCREMENT;
+
