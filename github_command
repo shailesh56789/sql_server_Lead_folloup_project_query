@@ -1,0 +1,85 @@
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2
+$ git init
+Initialized empty Git repository in G:/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2/.git/
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git remote add origin https://github.com/shailesh56789/php_api.git
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ ^C
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git add .
+warning: in the working copy of '.htaccess', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'config/database.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'controllers/BufferController.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'index.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'models/BufferService.php', LF will be replaced by CRLF the next time Git touches it
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ ^C
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git config --global user.name
+git config --global user.email
+shailesh56789
+shaishailesh00@gmail.com
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ ^C
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ # Check karo GitHub accessible hai ya nahi
+git ls-remote https://github.com/shailesh56789/php_api.git
+31d379162da12c7ec0fe295bca8417243fd8e025        HEAD
+31d379162da12c7ec0fe295bca8417243fd8e025        refs/heads/main
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ ^C
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git remote add origin https://github.com/shailesh56789/php_api.git
+error: remote origin already exists.
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ ^C
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git remote -v
+origin  https://github.com/shailesh56789/php_api.git (fetch)
+origin  https://github.com/shailesh56789/php_api.git (push)
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git push -u origin main
+error: src refspec main does not match any
+error: failed to push some refs to 'https://github.com/shailesh56789/php_api.git'
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ ^C
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git commit -m "Add lead management API"
+[master (root-commit) 9beb055] Add lead management API
+ 5 files changed, 487 insertions(+)
+ create mode 100644 .htaccess
+ create mode 100644 config/database.php
+ create mode 100644 controllers/BufferController.php
+ create mode 100644 index.php
+ create mode 100644 models/BufferService.php
+
+DELL@DESKTOP-O69I9AH MINGW64 /g/shailesh_folder/Kaiarali_projects/php_project_api/final_php_project -jo_live_per_jayega/github__repo/lead_management_v2 (master)
+$ git push -u origin master
+Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (10/10), 5.22 KiB | 1.74 MiB/s, done.
+Total 10 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/shailesh56789/php_api/pull/new/master
+remote:
+To https://github.com/shailesh56789/php_api.git
+ * [new branch]      master -> master
+branch 'master' set up to track 'origin/master'.
