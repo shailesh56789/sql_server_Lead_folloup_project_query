@@ -1,0 +1,6 @@
+DELETE fa, fc
+FROM followup_activity fa
+LEFT JOIN followup_communication fc
+    ON fa.lead_id = fc.lead_id
+    AND fa.sl_no = fc.sl_no
+WHERE fc.sl_no IS NULL;
