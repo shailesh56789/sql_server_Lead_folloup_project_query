@@ -1,0 +1,289 @@
+
+SET @search_text = '';
+SET @date_filter = 'all';
+SET @date_from   = '';
+SET @date_to     = '';
+SET @company     = 'VILLARAAG';
+SET @lead_source = '';
+SET @assigned_to = '';
+SET @priority    = '';
+SET @urgency     = '';
+
+SET @sql = "
+SELECT 
+    m.*,
+
+    s.Assign_To_MR_Main,
+    s.NBD_CRR,
+    s.Transcription,
+    s.Lead_Relates_to_which_company,
+    s.Name_of_User,
+    s.Phone_Number_of_User,
+    s.Email_of_User,
+    s.Country,
+    s.Urgency_YES_NO,
+    s.Contact_Time,
+    s.Summary_of_Conversation,
+    s.Lead_Outcome,
+    s.Lead_Category,
+    s.Preferred_Way_to_Contact,
+    s.Timestamp_2,
+    s.Intent,
+    s.Priority,
+    s.status,
+    s.Enquiry_Status_Last
+
+FROM master_buffer m
+JOIN staging_buffer_new s 
+    ON m.lead_id = s.Lead_id
+WHERE 1=1
+";
+
+-- 🔥 Dynamic filters (NO OR → FAST)
+
+SET @sql = CONCAT(@sql,
+
+    -- 🏢 COMPANY
+    IF(@company != '', 
+        CONCAT(" AND s.Lead_Relates_to_which_company = '", @company, "'"), 
+        ''),
+
+    -- 👤 ASSIGNED
+    IF(@assigned_to != '', 
+        CONCAT(" AND s.Assign_To_MR_Main = '", @assigned_to, "'"), 
+        ''),
+
+    -- 🎯 PRIORITY
+    IF(@priority != '', 
+        CONCAT(" AND s.Priority = '", @priority, "'"), 
+        ''),
+
+    -- ⚡ URGENCY
+    IF(@urgency != '', 
+        CONCAT(" AND s.Urgency_YES_NO = '", @urgency, "'"), 
+        ''),
+
+    -- 📊 LEAD SOURCE
+    IF(@lead_source != '', 
+        CONCAT(" AND m.Verified_Source = '", @lead_source, "'"), 
+        ''),
+
+    -- 🔍 SEARCH
+  IF(@search_text != '', 
+
+    IF(@search_text REGEXP '^[0-9]+$', 
+        CONCAT(" AND m.Mobile LIKE '", @search_text, "%'"),
+
+    IF(@search_text LIKE '%@%', 
+        CONCAT(" AND m.Email_Id LIKE '", @search_text, "%'"),
+
+    IF(@search_text REGEXP '^[A-Za-z0-9_-]+$', 
+        CONCAT(" AND m.lead_id LIKE '", @search_text, "%'"),
+
+        CONCAT(" AND m.Name_of_Client LIKE '", @search_text, "%'")
+    ))),
+
+''),
+    -- 📅 DATE FILTER
+    IF(@date_filter = 'today', "
+        AND m.Timestamp >= CURDATE()
+        AND m.Timestamp < CURDATE() + INTERVAL 1 DAY
+    ", ''),
+
+    IF(@date_filter = 'yesterday', "
+        AND m.Timestamp >= CURDATE() - INTERVAL 1 DAY
+        AND m.Timestamp < CURDATE()
+    ", ''),
+
+    IF(@date_filter = 'this_week', "
+        AND m.Timestamp >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+    ", ''),
+
+    IF(@date_filter = 'this_month', "
+        AND m.Timestamp >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+    ", ''),
+
+    IF(@date_filter = 'this_year', "
+        AND m.Timestamp >= DATE_FORMAT(CURDATE(), '%Y-01-01')
+    ", ''),
+
+    IF(@date_filter = 'custom' AND @date_from != '' AND @date_to != '',
+        CONCAT(" AND m.Timestamp BETWEEN '", @date_from, " 00:00:00' 
+                AND '", @date_to, " 23:59:59'"), 
+        '')
+);
+
+-- 🔥 ORDER + LIMIT (VERY IMPORTANT)
+SET @sql = CONCAT(@sql, " ORDER BY m.Timestamp DESC");
+
+-- 👀 DEBUG (optional)
+SELECT @sql;
+
+-- 🚀 EXECUTE
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+
+
+
+
+use test ;
+
+SELECT
+    m.*,
+    s.Assign_To_MR_Main,
+    s.NBD_CRR,
+    s.Transcription,
+    s.Lead_Relates_to_which_company,
+    s.Name_of_User,
+    s.Phone_Number_of_User,
+    s.Email_of_User,
+    s.Country,
+    s.Urgency_YES_NO,
+    s.Contact_Time,
+    s.Summary_of_Conversation,
+    s.Lead_Outcome,
+    s.Lead_Category,
+    s.Preferred_Way_to_Contact,
+    s.Timestamp_2,
+    s.Intent
+FROM master_buffer m
+LEFT JOIN staging_buffer_new s
+ON m.lead_id = s.Lead_id
+WHERE m.Timestamp > '2025-10-09 22:41:31'
+ORDER BY m.Timestamp DESC;
+
+
+
+
+
+-- *******************
+-- Step 1: Check karo ki indexes hain ya nahi
+SHOW INDEX FROM master_buffer;
+SHOW INDEX FROM staging_buffer_new;
+
+show create table master_buffer;
+show create table staging_buffer_new;
+
+
+
+CREATE INDEX idx_master_timestamp
+ON master_buffer (Timestamp);
+
+CREATE INDEX idx_master_timestamp_lead
+ON master_buffer (Timestamp DESC, lead_id);
+
+
+
+SET @search_text = '';
+SET @date_filter   = 'all';   -- empty means ignore
+SET @date_from   = '';
+SET @date_to     = '';
+SET @company     = 'VILLARAAG';
+SET @lead_source = '';
+SET @assigned_to = '';
+SET @priority    = '';
+SET @urgency     = '';
+
+
+SELECT 
+   
+          m.*,
+						s.Assign_To_MR_Main    AS Assigned_To,
+                        s.NBD_CRR,
+                        s.Transcription,
+                        s.Lead_Relates_to_which_company  AS Company,
+                        s.Name_of_User,
+                        s.Phone_Number_of_User,
+                        s.Email_of_User,
+                        s.Country,
+                        s.Urgency_YES_NO    AS Urgency,
+                        s.Contact_Time,
+                        s.Summary_of_Conversation,
+                        s.Lead_Outcome,
+                        s.Lead_Category,
+                        s.Preferred_Way_to_Contact,
+                        s.Timestamp_2,
+                        s.Intent,
+                        s.Priority,
+                        s.status,
+                        s.Enquiry_Status_Last
+                    FROM master_buffer m
+                    LEFT JOIN staging_buffer_new s
+                      ON m.lead_id = s.Lead_id
+WHERE 1=1
+-- 🔍 SEARCH (include lead_id also 🔥)
+AND (
+    @search_text = '' 
+    OR m.lead_id LIKE CONCAT('%', @search_text, '%')
+    OR m.Name_of_Client LIKE CONCAT('%', @search_text, '%')
+    OR m.Mobile LIKE CONCAT('%', @search_text, '%')
+    OR m.Email_Id LIKE CONCAT('%', @search_text, '%')
+    OR m.Subjects LIKE CONCAT('%', @search_text, '%')
+)
+-- 📅 👉 YAHAA DALNA HAI
+-- 📅 DATE
+AND (
+    @date_filter = 'all'
+
+    OR (@date_filter = 'today' 
+        AND DATE(m.Timestamp) = CURDATE())
+
+    OR (@date_filter = 'yesterday' 
+        AND DATE(m.Timestamp) = CURDATE() - INTERVAL 1 DAY)
+
+    OR (@date_filter = 'this_week' 
+        AND YEARWEEK(m.Timestamp, 1) = YEARWEEK(CURDATE(), 1))
+
+    OR (@date_filter = 'last_week' 
+        AND YEARWEEK(m.Timestamp, 1) = YEARWEEK(CURDATE(), 1) - 1)
+
+    OR (@date_filter = 'this_month' 
+        AND MONTH(m.Timestamp) = MONTH(CURDATE()) 
+        AND YEAR(m.Timestamp) = YEAR(CURDATE()))
+
+    OR (@date_filter = 'last_month' 
+        AND MONTH(m.Timestamp) = MONTH(CURDATE() - INTERVAL 1 MONTH)
+        AND YEAR(m.Timestamp) = YEAR(CURDATE() - INTERVAL 1 MONTH))
+
+    OR (@date_filter = 'this_year' 
+        AND YEAR(m.Timestamp) = YEAR(CURDATE()))
+
+    OR (@date_filter = 'last_year' 
+        AND YEAR(m.Timestamp) = YEAR(CURDATE()) - 1)
+OR (
+    @date_filter = 'custom' 
+    AND @date_from != '' 
+    AND @date_to != ''
+    AND m.Timestamp BETWEEN 
+        CONCAT(@date_from, ' 00:00:00') 
+        AND CONCAT(@date_to, ' 23:59:59')
+          )
+     )
+-- 🏢 COMPANY
+AND (
+    @company = '' 
+    OR s.Lead_Relates_to_which_company = @company
+)
+-- 📊 LEAD SOURCE
+AND (
+    @lead_source = '' 
+    OR m.Verified_Source = @lead_source
+)
+-- 👤 ASSIGNED
+AND (
+    @assigned_to = '' 
+    OR s.Assign_To_MR_Main = @assigned_to
+)
+-- 🎯 PRIORITY
+AND (
+    @priority = '' 
+    OR s.Priority = @priority
+)
+-- ⚡ URGENCY
+AND (
+    @urgency = '' 
+    OR s.Urgency_YES_NO = @urgency
+)
+ORDER BY m.Timestamp DESC;
